@@ -12,7 +12,11 @@ Afterwards, you can do one of two things
 2) Type 'busiest 5' to generate a chart comparing the 5 busiest stations on that day
 
 Some sample output can be seen in the images below
-TODO: Add screenshots
+![Compare busiest 5](/../screenshots/screenshots/busiest_5.png?raw=true "Busiest 5 stations")
+
+![Compare 2](/../screenshots/screenshots/compare_2.png?raw=true "Comparing 2 stations")
+
+![Compare 3](/../screenshots/screenshots/compare_3.png?raw=true "Comparing 3 stations")
 
 If you would like to save your chart, when the chart displays, click the save icon and choose the location where you would like to save the file.
 
