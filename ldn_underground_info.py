@@ -43,9 +43,9 @@ def ask_user_for_stations(stations):
   #only allow 5 stations to be compared
   while len(station_list) < 5:
     station = raw_input("Station name: ")
-    if station.lower() == 'busiest 5':
+    if station.lower().strip() == 'busiest 5':
       return None
-    if station.lower() == 'done':
+    if station.lower().strip() == 'done':
       break
     if check_station_valid(station, stations):
       if station.title() not in station_list:
@@ -106,7 +106,7 @@ def time_data_for_stations(data, stations, full_station_list):
       station_time_info.append(row[time])
     #convert from string to int and add to result list
     station_time_info = [int(time) for time in station_time_info]
-    times.append(station_time_info) 
+    times.append(station_time_info)
   return times
 
 def formatted_user_stations(station_list):
@@ -131,7 +131,7 @@ def plot_data(times, user_station_list, user_times_list):
 
   #map the string to integer for plotting purposes
   times_mappings = list(range(len(times)))
-  
+
   #rotate label 90 degrees to better fit graph
   plt.xticks(times_mappings, times, rotation=90)
 
@@ -140,7 +140,7 @@ def plot_data(times, user_station_list, user_times_list):
   for i in range(0, len(user_station_list)):
     plt.plot(times_mappings, user_times_list[i], c=colours[i], alpha=0.5,
              label=user_station_list[i])
- 
+
   #highlight difference between stations if only 2 being compared
   if len(user_station_list) == 2:
     plt.fill_between(times_mappings, user_times_list[0],
@@ -172,7 +172,7 @@ try:
 
     #ask user if they would like to see list of stations
     prompt_station_list_display(stations)
- 
+
     #get list of stations that user wants to compare
     user_station_list = ask_user_for_stations(stations)
 
