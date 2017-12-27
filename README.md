@@ -14,7 +14,7 @@ Afterwards, you can do one of two things
 Some sample output can be seen in the images below
 TODO: Add screenshots
 
-If you would like to save the image, when prompted, type 'y'.
+If you would like to save your chart, when the chart displays, click the save icon and choose the location where you would like to save the file.
 
 Powered by TfL Open Data
 Contains OS data © Crown copyright and database rights 2017
