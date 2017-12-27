@@ -13,6 +13,13 @@ from matplotlib import pyplot as plt
 
 from operator import itemgetter
 
+def formatted_line(line, lines_that_need_stripping, line_num):
+  """Returns line without trailing commas, if necessary."""
+  if line_num in lines_that_need_stripping:
+    #remove trailing commas
+    return line.translate(None, ",")
+  return line
+
 def list_underground_stations(data):
   """Returns a list of all underground stations in dataset."""
   stations = []
@@ -32,13 +39,7 @@ def prompt_station_list_display(stations):
 
 def ask_user_for_stations(stations):
   """Returns a list of stations the user wants to analyse."""
-  print("Option 1 -")
-  print("Please enter the stations you would like to analyse.")
-  print("You are allowed to pick at most 5 stations.")
-  print("Type done when complete.")
-  print("Note that entering 0 station names will default to option 2.\n")
-  print("Option 2 -")
-  print("Enter 'busiest 5' to see an analysis of the 5 busiest stations.\n")
+  display_options()
   station_list = []
   #only allow 5 stations to be compared
   while len(station_list) < 5:
@@ -55,6 +56,16 @@ def ask_user_for_stations(stations):
     else:
       print("Sorry, that station does not exist. Please try again.")
   return station_list
+
+def display_options():
+  """Shows the user what options they have when using the program."""
+  print("Option 1 -")
+  print("Please enter the stations you would like to analyse.")
+  print("You are allowed to pick at most 5 stations.")
+  print("Type done when complete.")
+  print("Note that entering 0 station names will default to option 2.\n")
+  print("Option 2 -")
+  print("Enter 'busiest 5' to see an analysis of the 5 busiest stations.\n")
 
 def busiest_five(data):
   """
@@ -163,22 +174,17 @@ try:
     f.seek(0)
     line_num = 1
     should_truncate = True
+    lines_that_need_stripping = [3, 5]
 
     for line in lines:
-      if line_num == 1 and "(C)" in line:
+      if line_num == 1 and '(C)' in line:
         #file already been formatted
         should_truncate = False
         break
-      else:
-        if not (line[0] == ',' and line[1] == ',') and 'COUNTS -' not in line:
-          lines_that_need_stripping = [3, 5]
-          if line_num in lines_that_need_stripping:
-            #remove trailing commas
-            comma_stripped_line = line.translate(None, ",")
-            f.write(comma_stripped_line)
-          else:
-            f.write(line)
-        line_num += 1
+      if not (line[0] == ',' and line[1] == ',') and 'COUNTS -' not in line:
+        line_to_write = formatted_line(line, lines_that_need_stripping, line_num)
+        f.write(line_to_write)
+      line_num += 1
 
     if should_truncate:
       f.truncate()
