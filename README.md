@@ -21,4 +21,5 @@ Some sample output can be seen in the images below
 If you would like to save your chart, when the chart displays, click the save icon and choose the location where you would like to save the file.
 
 Powered by TfL Open Data
+
 Contains OS data © Crown copyright and database rights 2017
