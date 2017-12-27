@@ -83,7 +83,6 @@ def busiest_five(data):
   #return the list of stations
   return [item['Station name'] for item in top_5]
 
-
 def check_station_valid(station, stations):
   """Returns whether station is in list of underground stations."""
   return station.title() in stations
@@ -158,6 +157,33 @@ def format_plot(title, date):
 
 filename = raw_input("Please enter relative path of filename: ")
 try:
+  #format file to assist parsing in next step i.e. remove unecessary lines
+  with open (filename, "r+") as f:
+    lines = f.readlines()
+    f.seek(0)
+    line_num = 1
+    should_truncate = True
+
+    for line in lines:
+      if line_num == 1 and "(C)" in line:
+        #file already been formatted
+        should_truncate = False
+        break
+      else:
+        if not (line[0] == ',' and line[1] == ',') and 'COUNTS -' not in line:
+          lines_that_need_stripping = [3, 5]
+          if line_num in lines_that_need_stripping:
+            #remove trailing commas
+            comma_stripped_line = line.translate(None, ",")
+            f.write(comma_stripped_line)
+          else:
+            f.write(line)
+        line_num += 1
+
+    if should_truncate:
+      f.truncate()
+
+  #parse formatted file
   with open(filename) as f:
     reader = csv.reader(f)
     #find header by skipping unrelated lines in dataset
